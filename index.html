@@ -12,6 +12,23 @@
     <container>
         <ul class="grid">
         </ul>
+        <button id="add-new-book">Add new book</button>
+        
     </container>
+    <form id="newBookDetails">
+        <ul>
+            <li><input type="text" id="title"></li>
+            <li><input type="text" id="author"></li>
+            <li><input type="number" id="pages"></li>
+            <li><input type="number" id="readPages"></li>
+            <li><fieldset>
+                <legend>Have you read the book?</legend>
+                    <label for="isRead-no">No</label>
+                    <input type="radio" name="isRead" id="isRead-no" value="no" checked>
+                    <label for="isRead-yes">Yes</label>
+                    <input type="radio" name="isRead" id="isRead-yes" value="yes">
+            </fieldset></li>
+        </ul>
+    </form>
 </body>
 </html>

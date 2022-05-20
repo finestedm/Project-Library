@@ -35,10 +35,13 @@ container {
     padding: min(5%, 2rem);
     background-color: var(--base-color);
     display: flex;
+    flex-direction: column;
 }
 
 
-ul {
+
+
+container>ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -49,7 +52,7 @@ ul {
     flex-basis: 100%;
 }
 
-ul>li {
+container>ul>li {
     background-color: var(--supp-color);
     border-radius: 1rem;
     padding: 1rem;
@@ -61,19 +64,48 @@ ul>li {
     gap: 1rem;
 }
 
-ul>li>.key {
+container>ul>li>.key {
     font-size: .7rem;
+    font-weight: 300;
 
 }
 
-ul>li>.key>.value {
+container>ul>li>.key>.value {
     font-size: 1rem;
+    font-weight: 500;
+
 }
 
-ul>li>img {
+container>ul>li>img {
     height: 100%;
     width: 100%;
     grid-area: image;
     object-fit: cover;
     border-radius: .6rem;
+}
+
+form {
+    position: absolute;
+    inset: 0 0 0 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+form>ul {
+    list-style: none;
+}
+
+form>ul input {
+    box-sizing: border-box;
+    appearance: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
