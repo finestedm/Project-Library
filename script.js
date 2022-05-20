@@ -1,5 +1,6 @@
 var myLibrary = [];
 
+var grid = document.querySelector('.grid');
 
 function Book(title, author, pages, readPages, isRead) {
     this.title = title;
@@ -9,8 +10,11 @@ function Book(title, author, pages, readPages, isRead) {
     this.isRead = isRead;
 }
 
+
+
 Book.prototype.addBookToLibrary = function () {
     myLibrary.push(this);
+    addBookToHTML(this);
 };
 
 function compareBooks(toDeleteBookTitle, currentBookTitle, toDeleteBookAuthor, currentBookAuthor) {
@@ -28,6 +32,19 @@ Book.prototype.deleteBookFromLibrary = function () {
     );
 };
 
+function addBookToHTML(book) {
+    var card = document.createElement('card');
+    for (let i = 0; i < Object.keys(book).length; i++) {
+        var DescriptionElement = document.createElement('div');
+        DescriptionElement.setAttribute('id', Object.keys(book)[i]);
+        DescriptionElement.setAttribute('class', 'description');
+        DescriptionElement.innerText = Object.values(book)[i];
+        card.appendChild(DescriptionElement);
+    }
+    grid.appendChild(card);
+}
+
+
 const book1 = new Book("Rings", "Tolkien", 320, 12, false);
 const book2 = new Book("chleb", "pies", 333, 22, false);
 const book3 = new Book("Ringes", "Tolkien", 320, 12, false);
@@ -40,21 +57,3 @@ book4.addBookToLibrary();
 
 book3.deleteBookFromLibrary();
 console.log(myLibrary);
-
-grid = document.querySelector('.grid');
-
-
-for (let i = 0; i < myLibrary.length; i++) { // this loop iterates through myLibrary
-    var card = document.createElement('card')  //creates card
-    Object.keys(myLibrary[i]).forEach(element => { //then iterates through all keys inside each element of myLibrary
-        var cardDescription = document.createElement(`div`); //and creates new element for each 
-        cardDescription.setAttribute('class', element); //sets class according to key description
-        card.appendChild(cardDescription); //and appends the card 
-    });
-    grid.appendChild(card)
-}
-
-
-
-
-
