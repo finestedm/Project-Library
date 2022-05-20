@@ -33,14 +33,24 @@ Book.prototype.deleteBookFromLibrary = function () {
 };
 
 function addBookToHTML(book) {
-    var card = document.createElement('card');
+    var card = document.createElement('li');
     for (let i = 0; i < Object.keys(book).length; i++) {
-        var DescriptionElement = document.createElement('div');
-        DescriptionElement.setAttribute('id', Object.keys(book)[i]);
-        DescriptionElement.setAttribute('class', 'description');
-        DescriptionElement.innerText = Object.values(book)[i];
-        card.appendChild(DescriptionElement);
+        var DescriptionKey = document.createElement('div');
+        DescriptionKey.setAttribute('id', Object.keys(book)[i]);
+        DescriptionKey.setAttribute('class', 'key');
+        DescriptionKey.innerText = Object.keys(book)[i];
+        var DescriptionValue = document.createElement('div')
+        DescriptionValue.setAttribute('id', Object.keys(book)[i]);
+        DescriptionValue.setAttribute('class', 'value');
+        DescriptionValue.innerText = Object.values(book)[i];
+        card.appendChild(DescriptionKey);
+        DescriptionKey.appendChild(DescriptionValue);
+
     }
+    var bookCover = document.createElement('img')
+    bookCover.setAttribute('class', 'image');
+    bookCover.setAttribute('src', './images/bookcover.jpg');
+    card.appendChild(bookCover);
     grid.appendChild(card);
 }
 

@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('http://fonts.cdnfonts.com/css/sofia-pro');
+
+@font-face {
+    font-family: 'Sofia Sans';
+    src: url('./fonts/SofiaSans[wdth\,wght].woff2') format('woff2');
+}
+
+body {
+    margin: 0;
+}
+
+* {
+    font-family: 'Sofia Sans', 'helvetica', 'arial', 'sans-serif';
+    font-weight: 400;
+    color: var(--text-color-dark);
+}
+
+:root {
+    --base-color: #EFF0F8;
+    --side-color: #232532;
+    --side-text-color: #595A74;
+    --text-color-dark: #272848d3;
+    --supp-color: #FFFFFF;
+    --acce-color-violet-light: #9698E2;
+    --acce-color-violet-darker: #5556A7;
+    --acce-color-red-light: #FF7070;
+    --acce-color-red-darker: #734242;
+}
+
+container {
+    margin: 0;
+    padding: min(5%, 2rem);
+    background-color: var(--base-color);
+    display: flex;
+}
+
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: 500px;
+    gap: 2rem;
+    flex-basis: 100%;
+}
+
+ul>li {
+    background-color: var(--supp-color);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: grid;
+    grid-template-areas:
+        'image image'
+        '. .';
+    grid-template-rows: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+ul>li>.key {
+    font-size: .7rem;
+
+}
+
+ul>li>.key>.value {
+    font-size: 1rem;
+}
+
+ul>li>img {
+    height: 100%;
+    width: 100%;
+    grid-area: image;
+    object-fit: cover;
+    border-radius: .6rem;
+}
