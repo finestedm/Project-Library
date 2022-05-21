@@ -64,7 +64,6 @@ const book2 = new Book("chleb", "pies", 333, 22, false);
 const book3 = new Book("Ringes", "Tolkien", 320, 12, false);
 const book4 = new Book("Total Recall", "aNieWiem", 320, 12, false);
 
-book1.addBookToLibrary();
 book2.addBookToLibrary();
 book3.addBookToLibrary();
 book4.addBookToLibrary();
