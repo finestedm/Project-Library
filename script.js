@@ -17,8 +17,8 @@ function Book(title, author, pages, readPages, isRead) {
 
 
 Book.prototype.addBookToLibrary = function () {
-    myLibrary.push(this);
     addBookToHTML(this);
+    myLibrary.push(this);
 };
 
 function compareBooks(toDeleteBookTitle, currentBookTitle, toDeleteBookAuthor, currentBookAuthor) {
