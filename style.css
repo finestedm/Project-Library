@@ -98,8 +98,11 @@ form {
     padding: 0;
     z-index: -1;
     opacity: 0;
+    -webkit-opacity: 0.5;
     transition: all 0.2s ease;
 }
+
+form * {}
 
 .visible {
     z-index: 1;

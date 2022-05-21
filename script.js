@@ -5,6 +5,7 @@ var formSwitch = document.getElementById('add-new-book')
 var form = document.getElementById('new-book-details')
 
 
+
 function Book(title, author, pages, readPages, isRead) {
     this.title = title;
     this.author = author;
