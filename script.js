@@ -17,8 +17,9 @@ function Book(title, author, pages, readPages, isRead) {
 
 
 Book.prototype.addBookToLibrary = function () {
-    addBookToHTML(this);
     myLibrary.push(this);
+    addBookToHTML(this);
+
 };
 
 function compareBooks(toDeleteBookTitle, currentBookTitle, toDeleteBookAuthor, currentBookAuthor) {
@@ -31,10 +32,11 @@ function compareBooks(toDeleteBookTitle, currentBookTitle, toDeleteBookAuthor, c
 }
 
 Book.prototype.deleteBookFromLibrary = function () {
-    deleteBookFromHTML(this);
     myLibrary = myLibrary.filter((book) =>
         compareBooks(this.title, book.title, this.author, book.author)
     );
+    deleteBookFromHTML(this);
+
 };
 
 function addBookToHTML(book) {
