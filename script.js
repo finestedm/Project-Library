@@ -75,7 +75,6 @@ book2.addBookToLibrary();
 book3.addBookToLibrary();
 book4.addBookToLibrary();
 
-book3.deleteBookFromLibrary();
 
 formSwitch.addEventListener('click', () => {
     form.classList.toggle('visible');
