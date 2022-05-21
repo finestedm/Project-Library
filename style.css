@@ -60,7 +60,7 @@ container>ul>li {
     grid-template-areas:
         'image image'
         '. .';
-    grid-template-rows: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: repeat(350px);
     gap: 1rem;
 }
 
