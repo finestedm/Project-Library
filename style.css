@@ -26,7 +26,7 @@ body {
     --supp-color: #FFFFFF;
     --acce-color-violet-light: #9698E2;
     --acce-color-violet-darker: #5556A7;
-    --acce-color-red-light: #FF7070;
+    --acce-color-red-light: #FF710;
     --acce-color-red-darker: #734242;
 }
 
@@ -85,27 +85,66 @@ container>ul>li>img {
 }
 
 form {
-    position: absolute;
+    position: fixed;
     inset: 0 0 0 0;
     width: 100%;
     height: 100vh;
-    opacity: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: hsla(0, 0%, 0%, 0.35);
     margin: 0;
     padding: 0;
+    z-index: -1;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.visible {
+    z-index: 1;
+    opacity: 1;
+
 }
 
 form>ul {
     list-style: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--supp-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 2px 4px rgba(0, 0, 0, .05), 0 4px 8px rgba(0, 0, 0, .05), 0 8px 16px rgba(0, 0, 0, .05), 0 16px 32px rgba(0, 0, 0, .05), 0 32px 64px rgba(0, 0, 0, .05);
 }
 
-form>ul input {
+form>ul>li {
+    margin: 1rem;
+
+}
+
+form>ul>li>label {
+    font-size: .7rem;
+}
+
+form>ul input:not([type='radio']) {
     box-sizing: border-box;
     appearance: none;
     width: 100%;
     margin: 0;
-    padding: 0;
+    padding: .7rem;
+    font-family: 'Sofia Sans', 'helvetica', 'arial', 'sans-serif';
+    border: none;
+    font-size: 1rem;
+    background-color: var(--base-color);
+    border-radius: 1rem;
+    ;
+}
+
+form>ul>nav {
+    width: 600px;
+    height: 60px;
+    border-radius: 5px;
+    display: flex;
+    text-align: center;
+    position: relative;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
 }

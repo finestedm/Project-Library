@@ -1,6 +1,9 @@
 var myLibrary = [];
 
 var grid = document.querySelector('.grid');
+var formSwitch = document.getElementById('add-new-book')
+var form = document.getElementById('new-book-details')
+
 
 function Book(title, author, pages, readPages, isRead) {
     this.title = title;
@@ -66,4 +69,15 @@ book3.addBookToLibrary();
 book4.addBookToLibrary();
 
 book3.deleteBookFromLibrary();
-console.log(myLibrary);
+
+formSwitch.addEventListener('click', () => {
+    form.classList.toggle('visible');
+});
+
+document.addEventListener('keydown', (e) => { hideForm(e) })
+
+function hideForm(e) {
+    if ((form.classList.contains('visible')) && (e.key === 'Escape')) {
+        form.classList.toggle('visible')
+    };
+}

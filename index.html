@@ -15,18 +15,31 @@
         <button id="add-new-book">Add new book</button>
         
     </container>
-    <form id="newBookDetails">
+    <form id="new-book-details" class="">
         <ul>
-            <li><input type="text" id="title"></li>
-            <li><input type="text" id="author"></li>
-            <li><input type="number" id="pages"></li>
-            <li><input type="number" id="readPages"></li>
+            <li>
+                <label for="title">Title</label>
+                <input type="text" id="title">
+            </li>
+            <li>
+                <label for="author">Author</label>
+                <input type="text" id="author">
+            </li>
+            <li>
+                <label for="pages">How many pages the book has</label>
+                <input type="number" id="pages">
+            </li>
+            <li>
+                <label for="readPages">How many pages have you read</label>
+                <input type="number" id="readPages">
+            </li>
             <li><fieldset>
-                <legend>Have you read the book?</legend>
+                <legend>Have you read the entire book?</legend>
                     <label for="isRead-no">No</label>
                     <input type="radio" name="isRead" id="isRead-no" value="no" checked>
                     <label for="isRead-yes">Yes</label>
                     <input type="radio" name="isRead" id="isRead-yes" value="yes">
+                    
             </fieldset></li>
         </ul>
     </form>
