@@ -31,13 +31,15 @@ function compareBooks(toDeleteBookTitle, currentBookTitle, toDeleteBookAuthor, c
 }
 
 Book.prototype.deleteBookFromLibrary = function () {
+    deleteBookFromHTML(this);
     myLibrary = myLibrary.filter((book) =>
         compareBooks(this.title, book.title, this.author, book.author)
     );
 };
 
 function addBookToHTML(book) {
-    var card = document.createElement('li');
+    var newBookCard = document.createElement('li');
+    newBookCard.setAttribute('id', (book.title + book.author).split(" ").join(""));
     for (let i = 0; i < Object.keys(book).length; i++) {
         var DescriptionKey = document.createElement('div');
         DescriptionKey.setAttribute('id', Object.keys(book)[i]);
@@ -47,23 +49,28 @@ function addBookToHTML(book) {
         DescriptionValue.setAttribute('id', Object.keys(book)[i]);
         DescriptionValue.setAttribute('class', 'value');
         DescriptionValue.innerText = Object.values(book)[i];
-        card.appendChild(DescriptionKey);
+        newBookCard.appendChild(DescriptionKey);
         DescriptionKey.appendChild(DescriptionValue);
 
     }
     var bookCover = document.createElement('img')
     bookCover.setAttribute('class', 'image');
     bookCover.setAttribute('src', './images/bookcover.jpg');
-    card.appendChild(bookCover);
-    grid.appendChild(card);
+    newBookCard.appendChild(bookCover);
+    grid.appendChild(newBookCard);
 }
 
+function deleteBookFromHTML(book) {
+    var cardToDelete = document.getElementById((book.title + book.author).split(" ").join(""));
+    cardToDelete.remove()
+}
 
-const book1 = new Book("Rings", "Tolkien", 320, 12, false);
+const book1 = new Book("Rings sd", "Tolkien", 320, 12, false);
 const book2 = new Book("chleb", "pies", 333, 22, false);
 const book3 = new Book("Ringes", "Tolkien", 320, 12, false);
 const book4 = new Book("Total Recall", "aNieWiem", 320, 12, false);
 
+book1.addBookToLibrary();
 book2.addBookToLibrary();
 book3.addBookToLibrary();
 book4.addBookToLibrary();
