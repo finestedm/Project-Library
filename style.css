@@ -124,7 +124,8 @@ form>ul>li {
 
 }
 
-form>ul>li>label {
+form>ul>li>label,
+form>ul>li>fieldset>legend {
     font-size: .7rem;
 }
 
@@ -139,8 +140,16 @@ form>ul input:not([type='radio']) {
     font-size: 1rem;
     background-color: var(--base-color);
     border-radius: 1rem;
-    ;
 }
+
+form>ul input[type='radio'] {
+    box-sizing: border-box;
+    appearance: none;
+    width: 100%;
+    margin: 0;
+    font-size: 1rem;
+}
+
 
 form>ul>nav {
     width: 600px;
@@ -151,4 +160,13 @@ form>ul>nav {
     position: relative;
     background: #fff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+}
+
+#add-new-book {
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50rem;
 }

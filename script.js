@@ -1,8 +1,16 @@
 var myLibrary = [];
 
 var grid = document.querySelector('.grid');
-var formSwitch = document.getElementById('add-new-book')
-var form = document.getElementById('new-book-details')
+var formSwitch = document.getElementById('add-new-book');
+var form = document.getElementById('new-book-details');
+var pages = document.querySelector(`input[id=pages]`);
+var readPages = document.querySelector(`input[id=readPages]`);
+var isReadYes = document.querySelector(`label[for='isReadYes']`);
+isReadYes.addEventListener('click', () => {
+    readPages.value = pages.value
+    console.log(pages.value)
+});
+
 
 
 
@@ -64,6 +72,7 @@ function addBookToHTML(book) {
 
 function deleteBookFromHTML(book) {
     var cardToDelete = document.getElementById((book.title + book.author).split(" ").join(""));
+    console.log(cardToDelete);
     cardToDelete.remove()
 }
 
