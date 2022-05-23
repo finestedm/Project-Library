@@ -9,6 +9,7 @@ var isReadYes = document.querySelector(`label[for='isReadYes']`);
 isReadYes.addEventListener('click', () => {
     readPages.value = pages.value
     console.log(pages.value)
+    // make the readPages go disabled so it doesnt accept changing the value and add eventListener to the isReadNo - so it enables it once more.
 });
 
 
