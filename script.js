@@ -3,24 +3,26 @@ var myLibrary = [];
 var grid = document.querySelector('.grid');
 var formSwitch = document.getElementById('add-new-book');
 var form = document.getElementById('new-book-details');
-var pages = document.querySelector(`input[id=pages]`);
-var readPages = document.querySelector(`input[id=readPages]`);
+var titleInput = document.querySelector(`input[id=title]`);
+var authorInput = document.querySelector(`input[id=author]`);
+var pagesInput = document.querySelector(`input[id=pages]`);
+var readPagesInput = document.querySelector(`input[id=readPages]`);
 var isReadYes = document.querySelector(`label[for='isReadYes']`);
-isReadYes.addEventListener('click', () => {
-    readPages.value = pages.value
-    console.log(pages.value)
-    // make the readPages go disabled so it doesnt accept changing the value and add eventListener to the isReadNo - so it enables it once more.
-});
+var isReadNo = document.querySelector(`label[for='isReadNo']`);
+var submitNewBookButton = document.querySelector('#submit-new-book-button');
+var dataset = 0
 
+function generateNewBookNumber() {
+    return dataset++;
+}
 
-
-
-function Book(title, author, pages, readPages, isRead) {
+function Book(title, author, pagesInput, readPagesInput, isRead) {
     this.title = title;
     this.author = author;
-    this.pages = pages;
-    this.readPages = readPages;
+    this.pagesInput = pagesInput;
+    this.readPagesInput = readPagesInput;
     this.isRead = isRead;
+    this.dataset = generateNewBookNumber();
 }
 
 
@@ -31,51 +33,79 @@ Book.prototype.addBookToLibrary = function () {
 
 };
 
-function compareBooks(toDeleteBookTitle, currentBookTitle, toDeleteBookAuthor, currentBookAuthor) {
+function compareBooks(toDeleteBookDataset, currentBookDataset) {
     if (
-        toDeleteBookTitle !== currentBookTitle ||
-        toDeleteBookAuthor !== currentBookAuthor
+        toDeleteBookDataset !== currentBookDataset
     ) {
-        return currentBookTitle;
+        return currentBookDataset;
     }
 }
 
 Book.prototype.deleteBookFromLibrary = function () {
-    myLibrary = myLibrary.filter((book) =>
-        compareBooks(this.title, book.title, this.author, book.author)
-    );
     deleteBookFromHTML(this);
+    myLibrary = myLibrary.filter((book) =>
+        compareBooks(this.dataset, book.dataset)
+    );
 
 };
 
 function addBookToHTML(book) {
     var newBookCard = document.createElement('li');
     newBookCard.setAttribute('id', (book.title + book.author).split(" ").join(""));
-    for (let i = 0; i < Object.keys(book).length; i++) {
-        var DescriptionKey = document.createElement('div');
-        DescriptionKey.setAttribute('id', Object.keys(book)[i]);
-        DescriptionKey.setAttribute('class', 'key');
-        DescriptionKey.innerText = Object.keys(book)[i];
-        var DescriptionValue = document.createElement('div')
-        DescriptionValue.setAttribute('id', Object.keys(book)[i]);
-        DescriptionValue.setAttribute('class', 'value');
-        DescriptionValue.innerText = Object.values(book)[i];
-        newBookCard.appendChild(DescriptionKey);
-        DescriptionKey.appendChild(DescriptionValue);
+    newBookCard.setAttribute('data', book.dataset);
+    for (let i = 0; i < (Object.keys(book).length - 1); i++) { // -1 in range to not print the last position (dataset)
+        var descriptionKey = document.createElement('div');
+        descriptionKey.setAttribute('id', Object.keys(book)[i]);
+        descriptionKey.setAttribute('class', 'key');
+        descriptionKey.innerText = Object.keys(book)[i];
+        var descriptionValue = document.createElement('div')
+        descriptionValue.setAttribute('id', Object.keys(book)[i]);
+        descriptionValue.setAttribute('class', 'value');
+        descriptionValue.innerText = Object.values(book)[i];
+        newBookCard.appendChild(descriptionKey);
+        descriptionKey.appendChild(descriptionValue);
 
     }
     var bookCover = document.createElement('img')
     bookCover.setAttribute('class', 'image');
     bookCover.setAttribute('src', './images/bookcover.jpg');
+    bookCover.setAttribute('data', book.dataset);
     newBookCard.appendChild(bookCover);
+    var editBookButton = document.createElement('img')
+    editBookButton.setAttribute('id', `edit${book.title}${book.author}`);
+    editBookButton.setAttribute('class', 'editbutton');
+    editBookButton.setAttribute('src', './images/edit.svg');
+    editBookButton.setAttribute('data', book.dataset);
+    var deleteBookButton = document.createElement('img')
+    deleteBookButton.setAttribute('id', `delete${book.title}${book.author}`);
+    deleteBookButton.setAttribute('class', 'deletebutton');
+    deleteBookButton.setAttribute('src', './images/delete.svg');
+    deleteBookButton.setAttribute('data', book.dataset);
+    var buttonBox = document.createElement('div');
+    buttonBox.setAttribute('id', `buttonBox${book.title}${book.author}`);
+    buttonBox.setAttribute('class', `buttonBox`);
+    buttonBox.setAttribute('data', book.dataset);
+    buttonBox.appendChild(editBookButton);
+    buttonBox.appendChild(deleteBookButton);
+    newBookCard.appendChild(buttonBox);
     grid.appendChild(newBookCard);
 }
 
 function deleteBookFromHTML(book) {
-    var cardToDelete = document.getElementById((book.title + book.author).split(" ").join(""));
-    console.log(cardToDelete);
-    cardToDelete.remove()
+    var cardToDelete = document.querySelector(`[data="${book.dataset}"]`)
+    console.log(cardToDelete)
+    cardToDelete.remove();
 }
+
+function checkReadPagesInput() {
+    if (readPagesInput.value > pagesInput.value) {
+        submitNewBookButton.disabled = true;
+    } else {
+        submitNewBookButton.disabled = false;
+
+    }
+}
+
 
 const book1 = new Book("Rings sd", "Tolkien", 320, 12, false);
 const book2 = new Book("chleb", "pies", 333, 22, false);
@@ -87,16 +117,45 @@ book2.addBookToLibrary();
 book3.addBookToLibrary();
 book4.addBookToLibrary();
 
-book3.deleteBookFromLibrary();
 
 formSwitch.addEventListener('click', () => {
     form.classList.toggle('visible');
 });
 
+submitNewBookButton.addEventListener('click', () => {
+    var newBook = new Book(titleInput.value, authorInput.value, pagesInput.value, readPagesInput.value, isReadYes.checked); // later add validation fot this values by sending it to 'generateNewBook' first
+    newBook.addBookToLibrary();
+
+});
+
+
 document.addEventListener('keydown', (e) => { hideForm(e) })
+// document.addEventListener('keydown', () => { checkReadPagesInput() }) // this doesn't work as intended for now
+
+// deleteButton.addEventListener('click', () => {
+//     console.log(this);
+// });
+
+
+isReadYes.addEventListener('click', () => {
+    readPagesInput.value = pagesInput.value
+    readPagesInput.setAttribute('disabled', 'true')
+});
+
+isReadNo.addEventListener('click', () => {
+    readPagesInput.removeAttribute('disabled')
+});
 
 function hideForm(e) {
     if ((form.classList.contains('visible')) && (e.key === 'Escape')) {
         form.classList.toggle('visible')
     };
 }
+
+var deleteButtons = document.querySelectorAll('.deletebutton');
+deleteButtons.forEach(element => {
+    element.addEventListener('click', (e) => {
+        var bookToDelete = e.target.getAttribute('data');
+        bookToDelete.deleteBookFromLibrary();
+    });
+});

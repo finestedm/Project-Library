@@ -53,6 +53,7 @@ container>ul {
 }
 
 container>ul>li {
+    position: relative;
     background-color: var(--supp-color);
     border-radius: 1rem;
     padding: 1rem;
@@ -63,6 +64,21 @@ container>ul>li {
     grid-template-rows: repeat(auto-fit, minmax(300px, 1fr));
     grid-auto-rows: 2.25rem;
     gap: 1rem;
+}
+
+container>ul>li>.buttonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+container>ul>li .editbutton,
+container>ul>li .deletebutton {
+    height: 50%;
+    opacity: .7;
 }
 
 container>ul>li>.key {
