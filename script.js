@@ -1,8 +1,9 @@
 var myLibrary = [];
 
 var grid = document.querySelector('.grid');
-var formSwitch = document.getElementById('add-new-book');
-var form = document.getElementById('new-book-details');
+var newBookFormSwitch = document.getElementById('add-new-book');
+var newBookForm = document.getElementById('new-book-details');
+var editBookForm = document.getElementById('edit-book-details');
 var titleInput = document.querySelector(`input[id=title]`);
 var authorInput = document.querySelector(`input[id=author]`);
 var pagesInput = document.querySelector(`input[id=pages]`);
@@ -16,16 +17,14 @@ function generateNewBookNumber() {
     return dataset++;
 }
 
-function Book(title, author, pagesInput, readPagesInput, isRead) {
+function Book(title, author, pages, readPages, isRead) {
     this.title = title;
     this.author = author;
-    this.pagesInput = pagesInput;
-    this.readPagesInput = readPagesInput;
+    this.pages = pages;
+    this.readPages = readPages;
     this.isRead = isRead;
     this.dataset = generateNewBookNumber();
 }
-
-
 
 Book.prototype.addBookToLibrary = function () {
     myLibrary.push(this);
@@ -49,6 +48,14 @@ Book.prototype.deleteBookFromLibrary = function () {
 
 };
 
+Book.prototype.editBook = function () {                         //this guy iterates through the edit form input and replaces it's value by looking if book constructor has an attribute that corresponded to the input id (which is luckly named the same way)
+    var editFormInput = editBookForm.querySelectorAll(`input`)
+    for (let i = 0; i < editFormInput.length; i++) {
+        editFormInputId = editFormInput[i].getAttribute('id')
+        editFormInput[i].value = this[editFormInputId];
+    }
+}
+
 function addBookToHTML(book) {
     var newBookCard = document.createElement('li');
     newBookCard.setAttribute('id', (book.title + book.author).split(" ").join(""));
@@ -66,29 +73,37 @@ function addBookToHTML(book) {
         descriptionKey.appendChild(descriptionValue);
 
     }
+    var generatedButtons = generateEditAndDeleteButtons(book);
     var bookCover = document.createElement('img')
     bookCover.setAttribute('class', 'image');
     bookCover.setAttribute('src', './images/bookcover.jpg');
     bookCover.setAttribute('data', book.dataset);
     newBookCard.appendChild(bookCover);
+    newBookCard.appendChild(generatedButtons);
+    grid.appendChild(newBookCard);
+}
+
+function generateEditAndDeleteButtons(book) {
     var editBookButton = document.createElement('img')
-    editBookButton.setAttribute('id', `edit${book.title}${book.author}`);
     editBookButton.setAttribute('class', 'editbutton');
     editBookButton.setAttribute('src', './images/edit.svg');
     editBookButton.setAttribute('data', book.dataset);
+    editBookButton.addEventListener('click', () => {  // editing is not yet implemented
+        book.editBook()
+    });
     var deleteBookButton = document.createElement('img')
-    deleteBookButton.setAttribute('id', `delete${book.title}${book.author}`);
     deleteBookButton.setAttribute('class', 'deletebutton');
     deleteBookButton.setAttribute('src', './images/delete.svg');
     deleteBookButton.setAttribute('data', book.dataset);
+    deleteBookButton.addEventListener('click', () => {
+        book.deleteBookFromLibrary()
+    });
     var buttonBox = document.createElement('div');
-    buttonBox.setAttribute('id', `buttonBox${book.title}${book.author}`);
     buttonBox.setAttribute('class', `buttonBox`);
     buttonBox.setAttribute('data', book.dataset);
     buttonBox.appendChild(editBookButton);
     buttonBox.appendChild(deleteBookButton);
-    newBookCard.appendChild(buttonBox);
-    grid.appendChild(newBookCard);
+    return buttonBox;
 }
 
 function deleteBookFromHTML(book) {
@@ -118,8 +133,8 @@ book3.addBookToLibrary();
 book4.addBookToLibrary();
 
 
-formSwitch.addEventListener('click', () => {
-    form.classList.toggle('visible');
+newBookFormSwitch.addEventListener('click', () => {
+    newBookForm.classList.toggle('visible');
 });
 
 submitNewBookButton.addEventListener('click', () => {
@@ -129,7 +144,7 @@ submitNewBookButton.addEventListener('click', () => {
 });
 
 
-document.addEventListener('keydown', (e) => { hideForm(e) })
+document.addEventListener('keydown', (e) => { hidenewBookForm(e) })
 // document.addEventListener('keydown', () => { checkReadPagesInput() }) // this doesn't work as intended for now
 
 // deleteButton.addEventListener('click', () => {
@@ -146,16 +161,8 @@ isReadNo.addEventListener('click', () => {
     readPagesInput.removeAttribute('disabled')
 });
 
-function hideForm(e) {
-    if ((form.classList.contains('visible')) && (e.key === 'Escape')) {
-        form.classList.toggle('visible')
+function hidenewBookForm(e) {
+    if ((newBookForm.classList.contains('visible')) && (e.key === 'Escape')) {
+        newBookForm.classList.toggle('visible')
     };
 }
-
-var deleteButtons = document.querySelectorAll('.deletebutton');
-deleteButtons.forEach(element => {
-    element.addEventListener('click', (e) => {
-        var bookToDelete = e.target.getAttribute('data');
-        bookToDelete.deleteBookFromLibrary();
-    });
-});
