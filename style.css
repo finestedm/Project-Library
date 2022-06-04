@@ -172,6 +172,19 @@ form>ul>li>fieldset>legend {
     font-size: .7rem;
 }
 
+form li>fieldset {
+    margin-top: 2rem;
+    background-color: var(--base-color);
+    border: none;
+    border-radius: 1rem;
+}
+
+form li>fieldset>legend {
+    margin: -.9rem;
+    position: relative;
+    top: -.5rem;
+}
+
 form>ul input:not([type='radio']) {
     box-sizing: border-box;
     appearance: none;
@@ -186,11 +199,27 @@ form>ul input:not([type='radio']) {
 }
 
 form>ul input[type='radio'] {
+    position: relative;
     box-sizing: border-box;
     appearance: none;
-    width: 100%;
-    margin: 0;
+    width: 10%;
+    text-align: center;
+    margin: 0 1rem;
     font-size: 1rem;
+}
+
+form>ul input[type='radio']::after {
+    position: absolute;
+    right: 1rem;
+    top: -.8rem;
+    margin: 0;
+    content: '●';
+    opacity: .2;
+}
+
+form>ul input[type='radio']:checked::after {
+    opacity: 1;
+    color: var(--acce-color-violet-dark);
 }
 
 
