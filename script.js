@@ -21,106 +21,108 @@ let index = 0;
     }
 }
 
-function Book(title, author, pages, readPages, isRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.readPages = readPages;
-    this.isRead = isRead;
-    this.dataset = setDataset()
-}
-
-Book.prototype.generateHTMLFromLibrary = function () {
-    Book.prototype.deleteAllBooksFromHTML();
-    for (let i = 0; i < myLibrary.length; i++) {
-        Book.prototype.addBookToHTML(myLibrary[i])
+class Book {
+    constructor(title, author, pages, readPages, isRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.readPages = readPages;
+        this.isRead = isRead;
+        this.dataset = setDataset()
     }
-}
 
-Book.prototype.deleteAllBooksFromHTML = function () {
-    generatedBookCards = grid.querySelectorAll('li');
-    for (let i = 0; i < generatedBookCards.length; i++) {
-        generatedBookCards[i].remove()
-    }
-};
-
-Book.prototype.addBookToLibrary = function () {
-    myLibrary.push(this);
-    Book.prototype.generateHTMLFromLibrary();
-};
-
-Book.prototype.compareBooks = function (currentBookDataset) {
-    if (
-        this.dataset !== currentBookDataset
-    ) {
-        return currentBookDataset;
-    }
-}
-
-Book.prototype.deleteBookFromLibrary = function () {
-    myLibrary = myLibrary.filter((book) =>
-        this.compareBooks(book.dataset)
-    );
-    Book.prototype.generateHTMLFromLibrary();
-
-};
-
-Book.prototype.editBook = function () {
-    //this guy iterates through the edit form input and replaces it's value by looking if book constructor has an attribute that corresponded to the input id (which is luckly named the same way)
-    editBookForm.classList.add('visible');
-    document.addEventListener('keydown', (e) => { hideBookForm(e) })
-
-
-    for (let i = 0; i < myLibrary.length; i++) {
-        if (this.dataset === myLibrary[i].dataset) {
-            index = i;
+    generateHTMLFromLibrary() {
+        Book.prototype.deleteAllBooksFromHTML();
+        for (let i = 0; i < myLibrary.length; i++) {
+            Book.prototype.addBookToHTML(myLibrary[i])
         }
     }
 
-    var editFormInput = editBookForm.querySelectorAll(`li>input`)
-    for (let i = 0; i < editFormInput.length; i++) {
-        editFormInputId = editFormInput[i].getAttribute('id')
-        editFormInput[i].value = this[editFormInputId];
+    deleteAllBooksFromHTML() {
+        let generatedBookCards = grid.querySelectorAll('li');
+        for (let i = 0; i < generatedBookCards.length; i++) {
+            generatedBookCards[i].remove()
+        }
     }
 
-    editBookDetailsButton.addEventListener('click', () => {
+    addBookToLibrary() {
+        myLibrary.push(this);
+        this.generateHTMLFromLibrary();
+    }
+
+    compareBooks(currentBookDataset) {
+        if (
+            this.dataset !== currentBookDataset
+        ) {
+            return currentBookDataset;
+        }
+    }
+
+    deleteBookFromLibrary() {
+        myLibrary = myLibrary.filter((book) =>
+            this.compareBooks(book.dataset)
+        );
+        this.generateHTMLFromLibrary();
+
+    };
+
+    editBook() {
+        //this guy iterates through the edit form input and replaces it's value by looking if book constructor has an attribute that corresponded to the input id (which is luckly named the same way)
+        editBookForm.classList.add('visible');
+        document.addEventListener('keydown', (e) => { hideBookForm(e) })
+
+
+        for (let i = 0; i < myLibrary.length; i++) {
+            if (this.dataset === myLibrary[i].dataset) {
+                index = i;
+            }
+        }
+
+        var editFormInput = editBookForm.querySelectorAll(`li>input`)
         for (let i = 0; i < editFormInput.length; i++) {
-            editFormInputId = editFormInput[i].getAttribute('id');
-            myLibrary[index][editFormInputId] = editFormInput[i].value;
-        };
-        Book.prototype.generateHTMLFromLibrary();
+            let editFormInputId = editFormInput[i].getAttribute('id')
+            editFormInput[i].value = this[editFormInputId];
+        }
 
-    });
+        editBookDetailsButton.addEventListener('click', () => {
+            for (let i = 0; i < editFormInput.length; i++) {
+                let editFormInputId = editFormInput[i].getAttribute('id');
+                myLibrary[index][editFormInputId] = editFormInput[i].value;
+            };
+            this.generateHTMLFromLibrary();
 
-}
+        });
+    }
 
-Book.prototype.addBookToHTML = function (book) {
+    addBookToHTML(book) {
 
+        var newBookCard = document.createElement('li');
+        newBookCard.setAttribute('id', (book.title + book.author).split(" ").join(""));
+        newBookCard.setAttribute('data', book.dataset);
+        for (let i = 0; i < (Object.keys(book).length - 1); i++) { // -1 in range to not print the last position (dataset)
+            var descriptionKey = document.createElement('div');
+            descriptionKey.setAttribute('id', Object.keys(book)[i]);
+            descriptionKey.setAttribute('class', 'key');
+            descriptionKey.innerText = Object.keys(book)[i];
+            var descriptionValue = document.createElement('div')
+            descriptionValue.setAttribute('id', Object.keys(book)[i]);
+            descriptionValue.setAttribute('class', 'value');
+            descriptionValue.innerText = Object.values(book)[i];
+            newBookCard.appendChild(descriptionKey);
+            descriptionKey.appendChild(descriptionValue);
 
-    var newBookCard = document.createElement('li');
-    newBookCard.setAttribute('id', (book.title + book.author).split(" ").join(""));
-    newBookCard.setAttribute('data', book.dataset);
-    for (let i = 0; i < (Object.keys(book).length - 1); i++) { // -1 in range to not print the last position (dataset)
-        var descriptionKey = document.createElement('div');
-        descriptionKey.setAttribute('id', Object.keys(book)[i]);
-        descriptionKey.setAttribute('class', 'key');
-        descriptionKey.innerText = Object.keys(book)[i];
-        var descriptionValue = document.createElement('div')
-        descriptionValue.setAttribute('id', Object.keys(book)[i]);
-        descriptionValue.setAttribute('class', 'value');
-        descriptionValue.innerText = Object.values(book)[i];
-        newBookCard.appendChild(descriptionKey);
-        descriptionKey.appendChild(descriptionValue);
+        }
+        var generatedButtons = generateEditAndDeleteButtons(book);
+        var bookCover = document.createElement('img')
+        bookCover.setAttribute('class', 'image');
+        bookCover.setAttribute('src', './images/bookcover.jpg');
+        bookCover.setAttribute('data', book.dataset);
+        newBookCard.appendChild(bookCover);
+        newBookCard.appendChild(generatedButtons);
+        grid.appendChild(newBookCard);
 
     }
-    var generatedButtons = generateEditAndDeleteButtons(book);
-    var bookCover = document.createElement('img')
-    bookCover.setAttribute('class', 'image');
-    bookCover.setAttribute('src', './images/bookcover.jpg');
-    bookCover.setAttribute('data', book.dataset);
-    newBookCard.appendChild(bookCover);
-    newBookCard.appendChild(generatedButtons);
-    grid.appendChild(newBookCard);
+
 
 }
 
