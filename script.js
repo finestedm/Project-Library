@@ -148,8 +148,8 @@ function generateEditAndDeleteButtons(book) {
 }
 
 
-function checkReadPagesInput() {
-    if (readPagesInput.value > pagesInput.value) {
+function checkReadPagesInput(readPages, pages) {
+    if (readPages > pages) {
         submitNewBookButton.disabled = true;
     } else {
         submitNewBookButton.disabled = false;
